@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String
+  major     String?
+  grade     Int?
+  password  String
+
+  subjects  Subject[]
+  schedules Schedule[]
+}
+
+model Subject {
+  id        Int      @id @default(autoincrement())
+  name      String
+
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+
+  exams     Exam[]
+  studyPlans StudyPlan[]
+  progresses Progress[]
+}
+
+model Schedule {
+  id        Int      @id @default(autoincrement())
+  title     String
+  date      DateTime
+
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Exam {
+  id        Int      @id @default(autoincrement())
+  date      DateTime
+
+  subjectId Int
+  subject   Subject  @relation(fields: [subjectId], references: [id])
+}
+
+model StudyPlan {
+  id        Int      @id @default(autoincrement())
+  date      DateTime
+  studyTime Int
+
+  subjectId Int
+  subject   Subject  @relation(fields: [subjectId], references: [id])
+}
+
+model Progress {
+  id        Int      @id @default(autoincrement())
+  date      DateTime
+  amount    Int
+
+  subjectId Int
+  subject   Subject  @relation(fields: [subjectId], references: [id])
+}
