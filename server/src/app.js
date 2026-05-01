@@ -1,11 +1,11 @@
 import express from "express";
 import cors from "cors";
 
-import authRouter from "./routes/auth.js";
-import timetableRouter from "./routes/timetable.js";
-import scheduleRouter from "./routes/schedule.js";
-import examsRouter from "./routes/exams.js";
-import studyplanRouter from "./routes/studyplan.js";
+import authRouter from "./routes/auth.route.js";
+import timetableRouter from "./routes/timetable.route.js";
+import scheduleRouter from "./routes/schedule.route.js";
+import examsRouter from "./routes/exams.route.js";
+import studyplanRouter from "./routes/studyplan.route.js";
 
 const app = express();
 app.use(cors());
