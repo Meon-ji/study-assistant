@@ -2,9 +2,19 @@ import bcrypt from "bcrypt";
 import prisma from "../lib/prisma.js";
 
 export async function registerService ({ email, name, password }) {
+    // trim
+    email = email?.trim();
+    name = name?.trim();
+    
     //입력값 검사
     if(!email || !name || !password){
         const error = new Error("이메일, 이름, 비밀번호를 모두 입력해주세요.");
+        error.status = 400;
+        throw error;
+    }
+
+    if (!email.includes("@")) {
+        const error = new Error("올바른 이메일 형식이 아닙니다.");
         error.status = 400;
         throw error;
     }
